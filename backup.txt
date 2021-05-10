@@ -1,0 +1,219 @@
+#include <stdio.h> // buat semua library
+#include <stdlib.h>
+#include <string.h>
+#include <windows.h>
+#include <conio.h>
+FILE* fs;
+FILE* fp;
+char map[100][100];
+//char move;
+void title()
+{
+	 printf(" /\\   |~) _  _ _ |_  _  _\n");
+     printf("/~~\\  |_)(_)| | ||_)(/_|\n\n");
+}
+
+int Ypos = 1;
+int Xpos = 1;
+void player()
+{
+	//char move;
+	map[Ypos][Xpos] = '@';
+	if(kbhit()){
+			switch(getch()){
+		case 'w': // atas
+			if(Ypos < 0 || Ypos > 17 || Xpos < 0 || Xpos > 34){
+				return;
+			}
+			else
+			{
+			map[Ypos][Xpos] = ' ';
+			Ypos--;
+			map[Ypos][Xpos] = '@';
+			}
+			break;
+		case 's': // bawah
+			if(Ypos < 0 || Ypos > 17 || Xpos < 0 || Xpos > 34){
+				return;
+			}
+			else if(map[Ypos][Xpos] == '#'|| map[Ypos][Xpos] == '|' || map[Ypos][Xpos] == '-' ){
+				return;
+			}
+			else{
+			map[Ypos][Xpos] = ' ';
+			Ypos++;
+			map[Ypos][Xpos] = '@';	
+			}
+			break;
+		case 'a': // kiri
+			if(Ypos < 0 || Ypos > 17 || Xpos < 0 || Xpos > 34){
+				return;
+			}
+			else if(map[Ypos][Xpos] == '#'|| map[Ypos][Xpos] == '|' || map[Ypos][Xpos] == '-' ){
+				return;
+			}
+			else
+			{
+			map[Ypos][Xpos] = ' ';
+			Xpos--;
+			map[Ypos][Xpos] = '@';	
+			}
+			break;
+			
+		case 'd': // kanan
+			if(Ypos < 0 || Ypos > 17 || Xpos < 0 || Xpos > 34){
+				return;
+			}
+				else if(map[Ypos][Xpos] == '#'|| map[Ypos][Xpos] == '|' || map[Ypos][Xpos] == '-' ){
+				return;
+			}
+			else{
+			map[Ypos][Xpos] = ' ';
+			Xpos++;
+			map[Ypos][Xpos] = '@';
+			}
+			break;
+	}
+
+		//default:
+		//player();
+			
+	}
+}
+
+//void player(int y, int x);
+//void moves(int y,int x)
+//{
+//	//char move;
+//	//scanf("%c",&move);
+//	//fflush(stdin);
+//	if(kbhit()){
+//		switch(getch())
+//		{
+//		case 'w':
+//	//	if()
+//		map[y][x] =' ';
+//		player(y-1,x);
+//		break;
+//		
+//		case 's':
+//		map[y][x] = ' ';
+//		player(y+1,x);
+//		break;
+//		
+//		case 'a':
+//		map[y][x] = ' ';
+//		player(y,x-1);
+//		break;
+//		
+//		case 'd':
+//		map[y][x] = ' ';
+//		player(y,x+1);
+//		break;
+//		}
+//	}
+//}
+
+void readmap()
+{
+//	bool cek = false;
+	int level = 1;
+	printf("\tLEVEL : %d\n",level);
+	FILE* fp = fopen("map.txt","r");
+	
+//	if(cek == false){
+		for(int i=0;i<17;i++)
+	{
+		for(int j=0;j<34;j++)
+		{
+			fscanf(fp,"%c",&map[i][j]);
+		}
+	}
+	
+//	}
+
+//	cek = true;
+	
+//	if(cek == true)
+//	{
+	//	player(1,1);
+//		for(int i=0;i<17;i++)
+//	{
+//		for(int j=0;j<34;j++)
+//		{
+//			printf("%c",map[i][j]);
+//		}
+//	}
+		
+//	}	
+			
+	fclose(fp);
+}
+
+void printmap()
+{
+//	player(1,1);
+		for(int i=0;i<17;i++)
+	{
+		for(int j=0;j<34;j++)
+		{
+			printf("%c",map[i][j]);
+		}
+	}
+}
+
+void save()
+{
+	FILE* fs = fopen("save.txt","a");
+	char name[100];
+	int score;
+	//fprintf(fs,"%s#%d\n",name,score);
+	fclose(fs);
+}
+
+int main()
+{
+	char fps[100];
+	int point = 0;
+	title();
+	printf("Enter Desired FPS : ");
+    scanf("%s",fps);
+      if((fp= fopen("map.txt","r"))== NULL)
+      {
+      	printf("\nMAP NOT FOUND!");
+      	getchar();
+      	getchar();
+      	exit(1);
+	  }
+      if((fs = fopen("save.txt","r"))==NULL)
+    {
+    	printf("\nSAVEFILE NOT FOUND!\nCREATING A NEW ONE!");
+    	getchar();
+    	save();
+	}
+    system("cls");
+   // player(1,1);
+   	readmap();
+    do{
+    system("cls");
+    player();
+   	printmap();
+	printf("\nPOINT : %d\n",point);
+	//if()
+	}while(1);
+	return 0;
+}
+
+//void player(int y,int x)
+//{
+//		if(y < 0 || y > 17 || x < 0 || x > 34){
+//				return;
+//			}
+//		if(map[y][x] == '#' || map[y][x] == '|' || map[y][x] == '-'){
+//			return;
+//		}
+//		map[y][x] = '@';
+//		moves(y,x);
+//}
+
+
